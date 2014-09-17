@@ -5,24 +5,24 @@ unit bddatamodule;
 interface
 
 uses
-	Classes, SysUtils, sqldb, IBConnection, FileUtil;
+    Classes, SysUtils, sqldb, IBConnection, FileUtil;
 
 type
 
-	{ TBDDataModule }
+    { TBDDataModule }
 
-	TBDDataModule = class(TDataModule)
-		IBConnection1: TIBConnection;
-		SQLTransaction1: TSQLTransaction;
-		procedure DataModuleCreate(Sender: TObject);
-	private
-		{ private declarations }
-	public
-		{ public declarations }
-	end;
+    TBDDataModule = class(TDataModule)
+        IBConnection1: TIBConnection;
+        SQLTransaction1: TSQLTransaction;
+        procedure DataModuleCreate(Sender: TObject);
+    private
+        { private declarations }
+    public
+        { public declarations }
+    end;
 
 var
-	Data_Module: TBDDataModule;
+    Data_Module: TBDDataModule;
 
 implementation
 
@@ -33,7 +33,7 @@ implementation
 
 procedure TBDDataModule.DataModuleCreate(Sender: TObject);
 begin
-	IBConnection1.Open;
+    IBConnection1.Open;
 end;
 
 end.
