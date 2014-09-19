@@ -330,16 +330,15 @@ var
 begin
     Schedule_Grid.MouseToCell(M_X, M_Y, Pcol, Prow);
     Cur_rect := Schedule_Grid.CellRect(Pcol, Prow);
-    Change_Button.Left := Cur_rect.Right - 20;
-    Add_Buuton.Left := Cur_rect.Right - 20;
-    Delete_Button.Left := Cur_rect.Right - 20;
-
     if (Length(FGrid_Cells_Values[Pcol][Prow].FRecords) > 0) and
         ((M_Y - Cur_rect.top) div
         (Schedule_Grid.Canvas.TextHeight(FGrid_Cells_Values[Pcol]
         [Prow].FRecords[0].FValues[0]) * Selected_fields_count) <
         (Length(FGrid_Cells_Values[Pcol][Prow].FRecords))) then
     begin
+         Change_Button.Left := Cur_rect.Right - 20;
+         Add_Buuton.Left := Cur_rect.Right - 20;
+         Delete_Button.Left := Cur_rect.Right - 20;
         text_h := Schedule_Grid.Canvas.TextHeight(
             FGrid_Cells_Values[Pcol][Prow].FRecords[0].FValues[0]);
         change_Button.tag :=
@@ -358,6 +357,12 @@ begin
         Add_Buuton.top := Cur_rect.Top +
             (((M_Y - Cur_rect.top) div (text_h * Selected_fields_count)) + 1) *
             (text_h * Selected_fields_count) - 20 * 3;
+    end
+    else
+    begin
+        Change_Button.Left := -1000;
+         Add_Buuton.Left := -1000;
+         Delete_Button.Left := -1000;
     end;
 
 end;
