@@ -7,7 +7,8 @@ interface
 uses
     Classes, SysUtils, sqldb, IBConnection, DB, FileUtil, SynMemo,
     SynHighlighterSQL, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
-    Buttons, DBGrids, DBCtrls, Menus, MetaData, references, bddatamodule, Schedule_Edit;
+    Buttons, DBGrids, DBCtrls, Menus, MetaData, references, bddatamodule, Schedule_Edit,
+    ConflictsMeta, ConflictsTree;
 
 type
 
@@ -37,6 +38,7 @@ type
         procedure Connect_ButtonClick(Sender: TObject);
         procedure File_ExitClick(Sender: TObject);
         procedure FormCreate(Sender: TObject);
+        procedure FormShow(Sender: TObject);
         procedure Send_Query_ButtonClick(Sender: TObject);
         procedure Create_Reference_Menu();
         procedure Reference_Table_Show(Sender: TObject);
@@ -119,6 +121,11 @@ begin
     Create_Reference_Menu();
 end;
 
+procedure TMySql.FormShow(Sender: TObject);
+begin
+
+end;
+
 
 procedure TMySql.Send_Query_ButtonClick(Sender: TObject);
 begin
@@ -142,7 +149,6 @@ end.
                          завести в программе
                          создать форму записать селект в квери, квери опен, форм шоу
                          }//procedure TMySql.GroupsTableMenuClick(Sender: TObject);//var//  TableDiscription: TReferenceForm;//begin//   TableDiscription:= TReferenceForm.Create(Nil);//   TableDiscription.show;//end;
-
 
 
 

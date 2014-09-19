@@ -288,17 +288,17 @@ initialization
         'Group_Name', 'Groups');
 
     Add_My_Table('Schedule_Items', 'Расписание', 'Schedule_Items_Id', True);
-    My_Tables[High(My_Tables)].Add_Field('Id', 'Ай-Ди', FTInt);
-    My_Tables[High(My_Tables)].Add_Field('Subject_id', 'Предмет', FTStr,
-        'Discipline_Name', 'Disciplines');
-    My_Tables[High(My_Tables)].Add_Field('Professor_id', 'Преподаватель',
-        FTStr, 'Professor_Name', 'Professors');
-    My_Tables[High(My_Tables)].Add_Field('Day_id', 'День Недели', FTDays,
+   {0} My_Tables[High(My_Tables)].Add_Field('Id', 'Ай-Ди', FTInt);
+   {1} My_Tables[High(My_Tables)].Add_Field('Subject_id', 'Предмет', FTStr,
+       'Discipline_Name', 'Disciplines');
+   {2} My_Tables[High(My_Tables)].Add_Field('Professor_id', 'Преподаватель',
+       FTStr, 'Professor_Name', 'Professors');
+   {3} My_Tables[High(My_Tables)].Add_Field('Day_id', 'День Недели', FTDays,
         'Day_Name', 'Days');
-    My_Tables[High(My_Tables)].Add_Field('Time_id', 'Время', FTStr, 'Begining', 'Times');
-    My_Tables[High(My_Tables)].Add_Field('Group_id', 'Группа', FTStr,
+   {4} My_Tables[High(My_Tables)].Add_Field('Time_id', 'Время', FTStr, 'Begining', 'Times');
+   {5} My_Tables[High(My_Tables)].Add_Field('Group_id', 'Группа', FTStr,
         'Group_Name', 'Groups');
-    My_Tables[High(My_Tables)].Add_Field('Room_id', 'Кабинет', FTStr, 'Room_Name', 'Rooms');
+   {6} My_Tables[High(My_Tables)].Add_Field('Room_id', 'Кабинет', FTStr, 'Room_Name', 'Rooms');
 
     Schedule_Table := My_Tables[High(My_Tables)];
 

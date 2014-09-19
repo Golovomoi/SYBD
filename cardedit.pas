@@ -29,7 +29,8 @@ type
         procedure FormShow(Sender: TObject);
         procedure Edit_PanelClick(Sender: TObject);
         procedure Save_ButtonClick(Sender: TObject);
-        constructor Create(Atable: TTable_Info; Aproc: TCom_Proc; ACurrent_Record_ID: string);
+        constructor Create(Atable: TTable_Info; Aproc: TCom_Proc;
+            ACurrent_Record_ID: string);
     private
         FCurrent_Table: TTable_Info;
         FRefresh_Reference: TCom_Proc;
@@ -69,8 +70,8 @@ begin
     with Card_Edit_SQLQuery do
     begin
         Close;
-        sql.Text := 'select * from ' + FCurrent_Table.FTable_Name + ' where id = ' +
-            FCurrent_Record_ID;
+        sql.Text := 'select * from ' + FCurrent_Table.FTable_Name +
+            ' where id = ' + FCurrent_Record_ID;
         Open;
     end;
     for i := 1 to High(FCurrent_Table.FFields) do
@@ -95,7 +96,8 @@ begin
                 DataBase := Data_Module.IBConnection1;
                 Transaction := Data_Module.SQLTransaction1;
                 Close;
-                sql.Text := 'select * from ' + FCurrent_Table.FFields[i].Get_Source_Table;
+                sql.Text := 'select * from ' +
+                    FCurrent_Table.FFields[i].Get_Source_Table;
                 Open;
             end;
 
@@ -103,7 +105,8 @@ begin
             FInsert_list[High(FInsert_list)].FLst_Source.DataSet :=
                 FInsert_list[High(FInsert_list)].FLst_query;
 
-            FInsert_list[High(FInsert_list)].FLookUpComboBox := TDBLookupComboBox.Create(Edit_Box);
+            FInsert_list[High(FInsert_list)].FLookUpComboBox :=
+                TDBLookupComboBox.Create(Edit_Box);
             with FInsert_list[High(FInsert_list)].FLookUpComboBox do
             begin
                 Parent := Edit_Box;
@@ -130,7 +133,8 @@ begin
                 left := 10;
                 Height := 25;
                 Width := 200;
-                Caption := Card_Edit_SQLQuery.FieldByName(FCurrent_Table.FFields[i].FName).Text;
+                Caption := Card_Edit_SQLQuery.FieldByName(
+                    FCurrent_Table.FFields[i].FName).Text;
                 tag := i;
             end;
 
@@ -207,7 +211,8 @@ begin
                 if FCurrent_Record_ID = trash_Value then
                     sql.Text := sql.Text + ' :' + param + ','
                 else
-                    Sql.Text := Sql.Text + FCurrent_Table.FFields[FEdits_list[i].tag].FName +
+                    Sql.Text :=
+                        Sql.Text + FCurrent_Table.FFields[FEdits_list[i].tag].FName +
                         ' = :' + param + ',';
 
                 Params.ParamByName(param).AsString :=
@@ -216,7 +221,7 @@ begin
             end;
             //sql.Text:=Copy(sql.Text, 1, Length(sql.Text)-2);
             sql.Text := Copy(sql.Text, 1, Length(SQL.Text) - 3);
-            ShowMessage(sql.Text);
+            //ShowMessage(sql.Text);
             if FCurrent_Record_ID = trash_Value then
                 sql.Text := sql.Text + ' )'
             else
@@ -239,10 +244,6 @@ end;
 
 
 end.
-
-
-
-
 
 
 

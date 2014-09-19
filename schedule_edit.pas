@@ -8,7 +8,7 @@ interface
 uses
     Classes, SysUtils, DB, sqldb, FileUtil, Forms, Controls, Graphics, Dialogs,
     Grids, ExtCtrls, Buttons, StdCtrls, MetaData, Clipbrd, Filters, CardEdit, sch_export,
-    bddatamodule;
+    bddatamodule, ConflictsMeta, ConflictsTree;
 
 type
 
@@ -18,6 +18,7 @@ type
 
     TSchedule_Edit_form = class(TForm)
         CheckGroup1: TCheckGroup;
+        ConflictsTreeBtn: TButton;
         Filters_panel: TPanel;
         Horisontal_fields: TComboBox;
         SaveDialog: TSaveDialog;
@@ -28,6 +29,8 @@ type
         Schedule_Grid: TDrawGrid;
         Button_Show: TSpeedButton;
         procedure CheckGroup1ItemClick(Sender: TObject; Index: integer);
+        procedure ConflictsTreeBtnClick(Sender: TObject);
+        procedure Filters_panelClick(Sender: TObject);
         procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
         procedure FormCreate(Sender: TObject);
         procedure Schedule_GridClick(Sender: TObject);
@@ -39,7 +42,8 @@ type
         procedure Schedule_GridMouseMove(Sender: TObject; Shift: TShiftState;
             X, Y: integer);
         procedure Show_schedule();
-        procedure Make_Title_array(var AFields_Array: TTitle_Array; AField_Index: integer);
+        procedure Make_Title_array(var AFields_Array: TTitle_Array;
+            AField_Index: integer);
         procedure create_card(Sender: TObject);
         procedure Create_Cell_Edit_Button();
         procedure Create_Cell_add_Button();
@@ -91,8 +95,8 @@ begin
     Show_schedule();
     for i := 0 to CheckGroup1.Items.Count - 1 do
     begin
-        CheckGroup1.Checked[i] := not
-            ((i = vertical_fields.Items.IndexOf(vertical_fields.Caption)) or
+        CheckGroup1.Checked[i] :=
+            not ((i = vertical_fields.Items.IndexOf(vertical_fields.Caption)) or
             (i = Horisontal_fields.Items.IndexOf(Horisontal_fields.Caption)));
         CheckGroup1.CheckEnabled[i] :=
             not ((i = vertical_fields.Items.IndexOf(vertical_fields.Caption)) or
@@ -153,8 +157,9 @@ begin
             while j <= High(FHorisontal_Fields) do
             begin
                 if (FieldByName(Schedule_Table.FFields[V_ind].FName).AsInteger =
-                    FVertical_Fields[i].FId) and (FieldByName(
-                    Schedule_Table.FFields[H_ind].FName).AsInteger = FHorisontal_Fields[j].FId) then
+                    FVertical_Fields[i].FId) and
+                    (FieldByName(Schedule_Table.FFields[H_ind].FName).AsInteger =
+                    FHorisontal_Fields[j].FId) then
                 begin
                     P_Records := FGrid_Cells_Values[i][j].FRecords;
                     SetLength(P_Records, Length(P_Records) + 1);
@@ -163,7 +168,8 @@ begin
                         begin
                             SetLength(FValues, Length(FValues) + 1);
                             FValues[high(FValues)] :=
-                                FieldByName(Schedule_Table.FFields[k].Get_Inner_Field).AsString;
+                                FieldByName(
+                                Schedule_Table.FFields[k].Get_Inner_Field).AsString;
                         end;
                     FGrid_Cells_Values[i][j].FRecords := P_Records;
                     if EOF then
@@ -208,7 +214,8 @@ begin
         begin
             SetLength(AFields_Array, Length(AFields_Array) + 1);
             AFields_Array[High(AFields_Array)].FName :=
-                FieldByName(Schedule_Table.FFields[AField_Index].Get_Inner_Field).AsString;
+                FieldByName(Schedule_Table.FFields[
+                AField_Index].Get_Inner_Field).AsString;
             AFields_Array[High(AFields_Array)].FID :=
                 FieldByName('id').AsInteger;
             Next;
@@ -295,8 +302,8 @@ begin
         with Schedule_edit_Edit_SQLQuery do
         begin
             Close;
-            sql.Text := ' delete from ' + Schedule_Table.FTable_Name + ' where id = ' +
-                IntToStr((Sender as TSpeedButton).tag);
+            sql.Text := ' delete from ' + Schedule_Table.FTable_Name +
+                ' where id = ' + IntToStr((Sender as TSpeedButton).tag);
             ExecSQL;
         end;
     Data_Module.SQLTransaction1.Commit;
@@ -319,6 +326,7 @@ procedure TSchedule_Edit_form.Replace_buttons;
 var
     Pcol, Prow, i: integer;
     Cur_rect: TRect;
+    text_h: integer;
 begin
     Schedule_Grid.MouseToCell(M_X, M_Y, Pcol, Prow);
     Cur_rect := Schedule_Grid.CellRect(Pcol, Prow);
@@ -327,23 +335,29 @@ begin
     Delete_Button.Left := Cur_rect.Right - 20;
 
     if (Length(FGrid_Cells_Values[Pcol][Prow].FRecords) > 0) and
-        ((M_Y - Cur_rect.top) div (20 * Selected_fields_count) <
+        ((M_Y - Cur_rect.top) div
+        (Schedule_Grid.Canvas.TextHeight(FGrid_Cells_Values[Pcol]
+        [Prow].FRecords[0].FValues[0]) * Selected_fields_count) <
         (Length(FGrid_Cells_Values[Pcol][Prow].FRecords))) then
     begin
-        change_Button.tag := StrToInt(FGrid_Cells_Values[Pcol][Prow].FRecords[
-            ((M_Y - Cur_rect.top) div (20 * Selected_fields_count))].FValues[0]);
-        Delete_Button.Tag := StrToInt(FGrid_Cells_Values[Pcol][Prow].FRecords[
-            ((M_Y - Cur_rect.top) div (20 * Selected_fields_count))].FValues[0]);
+        text_h := Schedule_Grid.Canvas.TextHeight(
+            FGrid_Cells_Values[Pcol][Prow].FRecords[0].FValues[0]);
+        change_Button.tag :=
+            StrToInt(FGrid_Cells_Values[Pcol][Prow].FRecords[
+            ((M_Y - Cur_rect.top) div (text_h * Selected_fields_count))].FValues[0]);
+        Delete_Button.Tag :=
+            StrToInt(FGrid_Cells_Values[Pcol][Prow].FRecords[
+            ((M_Y - Cur_rect.top) div (text_h * Selected_fields_count))].FValues[0]);
         ;
         Change_Button.top := Cur_rect.Top +
-            (((M_Y - Cur_rect.top) div (20 * Selected_fields_count)) + 1) *
-            (20 * Selected_fields_count) - 20;
+            (((M_Y - Cur_rect.top) div (text_h * Selected_fields_count)) + 1) *
+            (text_h * Selected_fields_count) - 20;
         Delete_Button.top := Cur_rect.Top +
-            (((M_Y - Cur_rect.top) div (20 * Selected_fields_count)) + 1) *
-            (20 * Selected_fields_count) - 40;
+            (((M_Y - Cur_rect.top) div (text_h * Selected_fields_count)) + 1) *
+            (text_h * Selected_fields_count) - 20 * 2;
         Add_Buuton.top := Cur_rect.Top +
-            (((M_Y - Cur_rect.top) div (20 * Selected_fields_count)) + 1) *
-            (20 * Selected_fields_count) - 60;
+            (((M_Y - Cur_rect.top) div (text_h * Selected_fields_count)) + 1) *
+            (text_h * Selected_fields_count) - 20 * 3;
     end;
 
 end;
@@ -351,7 +365,7 @@ end;
 procedure TSchedule_Edit_form.Schedule_GridDrawCell(Sender: TObject;
     aCol, aRow: integer; aRect: TRect; aState: TGridDrawState);
 var
-    i, j, k, Count, rec_count: integer;
+    i, j, k, Count, rec_count, text_h: integer;
 begin
     if (aCol = 0) and (aRow = 0) then
     begin
@@ -361,12 +375,14 @@ begin
     else
     if (aRow = 0) then
     begin
-        Schedule_Grid.Canvas.TextOut(aRect.Left, aRect.top, FHorisontal_Fields[acol].FName);
+        Schedule_Grid.Canvas.TextOut(aRect.Left, aRect.top,
+            FHorisontal_Fields[acol].FName);
     end
     else
     if (aCol = 0) then
     begin
-        Schedule_Grid.Canvas.TextOut(aRect.Left, aRect.top, FVertical_Fields[arow].FName);
+        Schedule_Grid.Canvas.TextOut(aRect.Left, aRect.top,
+            FVertical_Fields[arow].FName);
     end
     else
     begin
@@ -376,26 +392,32 @@ begin
             begin
                 for i := 0 to High(Schedule_Table.FFields) do
                 begin
-                    rec_count := (k * Length(Schedule_Table.FFields) + i - Count) * 20;
+                    text_h := Schedule_Grid.Canvas.TextHeight(
+                        FGrid_Cells_Values[aRow][aCol].FRecords[0].FValues[0]);
+                    ;
+                    rec_count :=
+                        (k * Length(Schedule_Table.FFields) + i - Count) * text_h;
                     if CheckGroup1.Checked[i] then
                     begin
                         Schedule_Grid.Canvas.TextOut(aRect.Left, aRect.top + rec_count,
-                            Schedule_Table.FFields[i].FRu_Name + ': ' +
-                            FGrid_Cells_Values[aRow][aCol].FRecords[k].FValues[i]);
+                            Schedule_Table.FFields[i].FRu_Name +
+                            ': ' + FGrid_Cells_Values[aRow]
+                            [aCol].FRecords[k].FValues[i]);
                     end
                     else
                         Inc(Count);
 
                 end;
-                Schedule_Grid.Canvas.line(aRect.Left, aRect.Top + rec_count + 19,
-                    aRect.Left + 300, aRect.Top + rec_count + 19);
+                Schedule_Grid.Canvas.line(aRect.Left, aRect.Top + rec_count + text_h - 1,
+                    aRect.Left + 300, aRect.Top + rec_count + text_h - 1);
             end;
 
         if Length(FGrid_Cells_Values[aRow][aCol].FRecords) > 1 then
         begin
             Schedule_Grid.Canvas.brush.Color := ClBlack;
             Schedule_Grid.Canvas.Polygon([Point(aRect.Right, aRect.Bottom),
-                Point(aRect.Right - 15, aRect.Bottom), Point(aRect.Right, aRect.Bottom - 15)]);
+                Point(aRect.Right - 15, aRect.Bottom),
+                Point(aRect.Right, aRect.Bottom - 15)]);
             schedule_grid.Canvas.Brush.Color := clWhite;
         end;
 
@@ -447,8 +469,8 @@ begin
     else
     if length(FGrid_Cells_Values[size_col][size_row].FRecords) > 0 then
         Schedule_Grid.RowHeights[size_row] :=
-            length(FGrid_Cells_Values[size_col][size_row].FRecords) * 20 * Length(
-            Schedule_Table.FFields);
+            length(FGrid_Cells_Values[size_col][size_row].FRecords) *
+            20 * Length(Schedule_Table.FFields);
 
 end;
 
@@ -471,5 +493,16 @@ begin
 
 end;
 
-end.
+procedure TSchedule_Edit_form.ConflictsTreeBtnClick(Sender: TObject);
+begin
+    ConflictsTreeForm := TConflictsTreeForm.Create(nil);
+    ConflictsModule.Refresh_conflicts();
+    ConflictsTreeForm.Show;
+end;
 
+procedure TSchedule_Edit_form.Filters_panelClick(Sender: TObject);
+begin
+
+end;
+
+end.
