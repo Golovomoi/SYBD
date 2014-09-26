@@ -243,7 +243,7 @@ begin
     with FFilter_Edit do
     begin
         Parent := FFilter_Panel;
-        left := Fselect_Field.left + Fselect_Field.Width + 10;
+        left := FSelect_Condition.left + FSelect_Condition.Width + 10;
         Top := 12;
         Width := FFilter_Panel.Width div 2;
         Height := FFilter_Panel.Height - 10;

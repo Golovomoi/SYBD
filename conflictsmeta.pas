@@ -26,7 +26,6 @@ type
         procedure AddConflict(AName: string; AEqual, AUnequal: array of integer);
         function MakeQuery(AID: integer): string;
         function GetConflictPairs(AID: integer): TConflictPairs;
-        function IsInConflict(AID: integer): TPoint;
         procedure Refresh_conflicts();
     end;
 
@@ -104,16 +103,6 @@ begin
     Result := tmpPairs;
 end;
 
-function TConflictsModule.IsInConflict(AID: integer): TPoint;
-var
-    i, j: integer;
-begin
-    for i := 0 to High(Conflicts) do
-        for j := 0 to High(ConflictPairs[i]) do
-            if (ConflictPairs[i][j].x = AID) or (ConflictPairs[i][j].y = AID) then
-                Exit(Point(i, j));
-    Exit(Point(-1, -1));
-end;
 
 procedure TConflictsModule.Refresh_conflicts;
 var

@@ -15,6 +15,7 @@ type
     TTitle_Field = record
         FName: string;
         FId: integer;
+        max_text_width: integer;
     end;
 
     TGrid_Record = record
@@ -22,6 +23,8 @@ type
     end;
 
     TGrid_Cell = record
+        max_text_width: integer;
+        max_text_height: integer;
         FRecords: array of TGrid_Record;
     end;
     TMy_Grid = array of array of TGrid_Cell;
