@@ -66,7 +66,7 @@
         <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
-        <CursorPos X="33" Y="18"/>
+        <CursorPos X="50" Y="13"/>
         <UsageCount Value="274"/>
         <Loaded Value="True"/>
       </Unit4>
@@ -103,11 +103,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Schedule_Edit"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="5"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="386"/>
-        <CursorPos X="76" Y="191"/>
+        <TopLine Value="442"/>
+        <CursorPos X="13" Y="453"/>
         <UsageCount Value="335"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -120,7 +119,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="8"/>
         <CursorPos X="53" Y="39"/>
-        <UsageCount Value="117"/>
+        <UsageCount Value="127"/>
         <Loaded Value="True"/>
       </Unit8>
       <Unit9>
@@ -130,7 +129,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="58" Y="13"/>
-        <UsageCount Value="101"/>
+        <UsageCount Value="111"/>
       </Unit9>
       <Unit10>
         <Filename Value="conflictsmeta.pas"/>
@@ -142,8 +141,8 @@
         <EditorIndex Value="9"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
-        <CursorPos X="77" Y="85"/>
-        <UsageCount Value="100"/>
+        <CursorPos X="5" Y="59"/>
+        <UsageCount Value="110"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit10>
@@ -154,11 +153,12 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ConflictsTree"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="8"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="35" Y="30"/>
-        <UsageCount Value="100"/>
+        <TopLine Value="17"/>
+        <CursorPos X="26" Y="67"/>
+        <UsageCount Value="110"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit11>
@@ -168,35 +168,35 @@
         <WindowIndex Value="0"/>
         <TopLine Value="3883"/>
         <CursorPos X="47" Y="3895"/>
-        <UsageCount Value="133"/>
+        <UsageCount Value="132"/>
       </Unit12>
       <Unit13>
         <Filename Value="C:\lazarus\lcl\include\canvas.inc"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1716"/>
         <CursorPos X="42" Y="1717"/>
-        <UsageCount Value="133"/>
+        <UsageCount Value="132"/>
       </Unit13>
       <Unit14>
         <Filename Value="C:\lazarus\lcl\include\control.inc"/>
         <WindowIndex Value="0"/>
         <TopLine Value="2696"/>
         <CursorPos X="40" Y="2716"/>
-        <UsageCount Value="5"/>
+        <UsageCount Value="4"/>
       </Unit14>
       <Unit15>
         <Filename Value="C:\lazarus\lcl\include\customcheckgroup.inc"/>
         <WindowIndex Value="0"/>
         <TopLine Value="63"/>
         <CursorPos X="1" Y="89"/>
-        <UsageCount Value="1"/>
+        <UsageCount Value="0"/>
       </Unit15>
       <Unit16>
         <Filename Value="bddatamodule.lfm"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="49" Y="15"/>
-        <UsageCount Value="3"/>
+        <UsageCount Value="2"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit16>
       <Unit17>
@@ -205,7 +205,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="2141"/>
         <CursorPos X="72" Y="2141"/>
-        <UsageCount Value="50"/>
+        <UsageCount Value="54"/>
         <Loaded Value="True"/>
       </Unit17>
     </Units>
@@ -215,123 +215,123 @@
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="294" Column="38" TopLine="157"/>
+        <Caret Line="402" Column="1" TopLine="386"/>
       </Position1>
       <Position2>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="330" Column="20" TopLine="319"/>
+        <Caret Line="404" Column="1" TopLine="386"/>
       </Position2>
       <Position3>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="335" Column="5" TopLine="321"/>
+        <Caret Line="462" Column="1" TopLine="435"/>
       </Position3>
       <Position4>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="516" Column="9" TopLine="460"/>
+        <Caret Line="402" Column="42" TopLine="378"/>
       </Position4>
       <Position5>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="178" Column="56" TopLine="150"/>
+        <Caret Line="427" Column="40" TopLine="235"/>
       </Position5>
       <Position6>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="434" Column="32" TopLine="394"/>
+        <Caret Line="180" Column="33" TopLine="154"/>
       </Position6>
       <Position7>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="177" Column="41" TopLine="150"/>
+        <Caret Line="187" Column="94" TopLine="483"/>
       </Position7>
       <Position8>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="178" Column="1" TopLine="150"/>
+        <Caret Line="508" Column="29" TopLine="476"/>
       </Position8>
       <Position9>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="177" Column="1" TopLine="150"/>
+        <Caret Line="464" Column="65" TopLine="436"/>
       </Position9>
       <Position10>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="76" Column="1" TopLine="441"/>
+        <Caret Line="466" Column="58" TopLine="451"/>
       </Position10>
       <Position11>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="407" Column="48" TopLine="395"/>
+        <Caret Line="529" Column="93" TopLine="497"/>
       </Position11>
       <Position12>
-        <Filename Value="metadata.pas"/>
-        <Caret Line="26" Column="25" TopLine="1"/>
+        <Filename Value="schedule_edit.pas"/>
+        <Caret Line="444" Column="104" TopLine="409"/>
       </Position12>
       <Position13>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="56" Column="29" TopLine="29"/>
+        <Caret Line="181" Column="50" TopLine="145"/>
       </Position13>
       <Position14>
-        <Filename Value="metadata.pas"/>
-        <Caret Line="26" Column="14" TopLine="1"/>
+        <Filename Value="schedule_edit.pas"/>
+        <Caret Line="351" Column="44" TopLine="325"/>
       </Position14>
       <Position15>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="180" Column="82" TopLine="145"/>
+        <Caret Line="348" Column="89" TopLine="321"/>
       </Position15>
       <Position16>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="413" Column="41" TopLine="386"/>
+        <Caret Line="346" Column="60" TopLine="322"/>
       </Position16>
       <Position17>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="401" Column="42" TopLine="386"/>
+        <Caret Line="348" Column="9" TopLine="322"/>
       </Position17>
       <Position18>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="402" Column="1" TopLine="386"/>
+        <Caret Line="347" Column="106" TopLine="320"/>
       </Position18>
       <Position19>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="404" Column="1" TopLine="386"/>
+        <Caret Line="346" Column="18" TopLine="319"/>
       </Position19>
       <Position20>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="462" Column="1" TopLine="435"/>
+        <Caret Line="349" Column="42" TopLine="329"/>
       </Position20>
       <Position21>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="402" Column="42" TopLine="378"/>
+        <Caret Line="355" Column="32" TopLine="329"/>
       </Position21>
       <Position22>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="427" Column="40" TopLine="235"/>
+        <Caret Line="348" Column="38" TopLine="322"/>
       </Position22>
       <Position23>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="180" Column="33" TopLine="154"/>
+        <Caret Line="364" Column="36" TopLine="333"/>
       </Position23>
       <Position24>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="187" Column="94" TopLine="483"/>
+        <Caret Line="357" Column="59" TopLine="331"/>
       </Position24>
       <Position25>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="508" Column="29" TopLine="476"/>
+        <Caret Line="348" Column="45" TopLine="331"/>
       </Position25>
       <Position26>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="464" Column="65" TopLine="436"/>
+        <Caret Line="350" Column="36" TopLine="324"/>
       </Position26>
       <Position27>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="466" Column="58" TopLine="451"/>
+        <Caret Line="69" Column="54" TopLine="45"/>
       </Position27>
       <Position28>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="529" Column="93" TopLine="497"/>
+        <Caret Line="83" Column="9" TopLine="81"/>
       </Position28>
       <Position29>
         <Filename Value="schedule_edit.pas"/>
-        <Caret Line="444" Column="104" TopLine="409"/>
+        <Caret Line="69" Column="45" TopLine="43"/>
       </Position29>
       <Position30>
-        <Filename Value="schedule_edit.pas"/>
-        <Caret Line="181" Column="50" TopLine="145"/>
+        <Filename Value="conflictstree.pas"/>
+        <Caret Line="35" Column="44" TopLine="11"/>
       </Position30>
     </JumpHistory>
   </ProjectSession>

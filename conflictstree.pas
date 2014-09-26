@@ -15,6 +15,7 @@ type
   TConflictsTreeForm = class(TForm)
     TreeView: TTreeView;
     procedure FormShow(Sender: TObject);
+	procedure TreeViewDblClick(Sender: TObject);
   public
     procedure BuildTree;
     procedure InsertConflicts(ANode: TTreeNode; AID:  Integer);
@@ -59,6 +60,11 @@ end;
 procedure TConflictsTreeForm.FormShow(Sender: TObject);
 begin
   BuildTree;
+end;
+
+procedure TConflictsTreeForm.TreeViewDblClick(Sender: TObject);
+begin
+        ShowMessage('asd');
 end;
 
 

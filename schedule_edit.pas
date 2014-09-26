@@ -66,6 +66,7 @@ type
     public
         { public declarations }
     end;
+    function PointInTriangle (a,b,c,p:TPoint):boolean;
 
 
 var
@@ -76,6 +77,14 @@ var
 
 
 implementation
+
+function PointInTriangle(a, b, c, p: TPoint): boolean;
+begin
+    Result:=false;
+    if ((p.x-a.x)*(a.y-b.y)-(p.y-a.y)*(a.x-b.x)>=0) and
+    ((p.x-b.x)*(b.y-c.y)-(p.y-b.y)*(b.x-c.x)>=0) and
+    ((p.x-c.x)*(c.y-a.y)-(p.y-c.y)*(c.x-a.x)>=0) then Result:=true;
+end;
 
 {$R *.lfm}
 
@@ -338,53 +347,40 @@ procedure TSchedule_Edit_form.Save_ButtonClick(Sender: TObject);
 
 procedure TSchedule_Edit_form.Replace_buttons;
     var
-        Pcol, Prow, i: integer;
+        Pcol, Prow, i, angle, h_tag: integer;
         Cur_rect: TRect;
+        Help_cell: TGrid_Cell;
     begin
         Schedule_Grid.MouseToCell(M_X, M_Y, Pcol, Prow);
+        Help_cell:= FGrid_Cells_Values[Prow][Pcol];
         Cur_rect := Schedule_Grid.CellRect(Pcol, Prow);
-        if Length(FGrid_Cells_Values[Prow][Pcol].FRecords) > 0 then
+        if (Length(Help_cell.FRecords) > 0) and (( Length(Help_cell.FRecords) = 1) or
+        (Schedule_Grid.RowHeights[Prow] >= (Help_cell.max_text_height * Selected_fields_count)*
+        Length(Help_cell.FRecords))) and ((M_Y - Cur_rect.Top) div
+            (Selected_fields_count* Help_cell.max_text_height) <= High(Help_cell.FRecords)) then
         begin
-            Change_Button.Left := Cur_rect.Right - 20;
-            Add_Buuton.Left := Cur_rect.Right - 20;
-            Delete_Button.Left := Cur_rect.Right - 20;
+            angle := Cur_rect.Top + (((M_Y - Cur_rect.Top) div
+            (Selected_fields_count * Help_cell.max_text_height)))*Selected_fields_count
+            *Help_cell.max_text_height;
+            Delete_Button.Left := Cur_rect.Right - Delete_Button.Width;
+            Delete_Button.Top:=angle;
+            h_tag:= strtoint(Help_cell.FRecords[(M_Y - Cur_rect.Top) div
+            (Selected_fields_count* Help_cell.max_text_height)].FValues[0]);
+            Delete_Button.Tag:=h_tag;
+            Change_Button.Left:= Delete_Button.Left - Delete_Button.Width - 1;
+            Change_Button.Top:=angle;
+            Change_Button.Tag:=h_tag;
+            Add_Buuton.Left:=Change_Button.Left - Change_Button.Width -1;
+            Add_Buuton.top:= angle;
+        end
+        else
+        begin
+            Add_Buuton.Left:=-1000;
+            Change_Button.Left:=-1000;
+            Delete_Button.Left:=-1000;
+		end;
 
-        end;
-  {  if (Length(FGrid_Cells_Values[Pcol][Prow].FRecords) > 0) and
-        ((M_Y - Cur_rect.top) div
-        (Schedule_Grid.Canvas.TextHeight(FGrid_Cells_Values[Pcol]
-        [Prow].FRecords[0].FValues[0]) * Selected_fields_count) <
-        (Length(FGrid_Cells_Values[Pcol][Prow].FRecords))) then
-    begin
-         Change_Button.Left := Cur_rect.Right - 20;
-         Add_Buuton.Left := Cur_rect.Right - 20;
-         Delete_Button.Left := Cur_rect.Right - 20;
-         if (text_h * Selected_fields_count) <=0 then exit;
-        text_h := Schedule_Grid.Canvas.TextHeight(
-            FGrid_Cells_Values[Pcol][Prow].FRecords[0].FValues[0]);
-        change_Button.tag :=
-            StrToInt(FGrid_Cells_Values[Pcol][Prow].FRecords[
-            ((M_Y - Cur_rect.top) div (text_h * Selected_fields_count))].FValues[0]);
-        Delete_Button.Tag :=
-            StrToInt(FGrid_Cells_Values[Pcol][Prow].FRecords[
-            ((M_Y - Cur_rect.top) div (text_h * Selected_fields_count))].FValues[0]);
-        ;
-        Change_Button.top := Cur_rect.Top +
-            (((M_Y - Cur_rect.top) div (text_h * Selected_fields_count)) +1) *
-            (text_h * Selected_fields_count) - 20;
-        Delete_Button.top := Cur_rect.Top +
-            (((M_Y - Cur_rect.top) div (text_h * Selected_fields_count)) +1) *
-            (text_h * Selected_fields_count) - 20 * 2;
-        Add_Buuton.top := Cur_rect.Top +
-            (((M_Y - Cur_rect.top) div (text_h * Selected_fields_count)) +1) *
-            (text_h * Selected_fields_count) - 20 * 3;
-    end
-    else
-    begin
-        Change_Button.Left := -1000;
-         Add_Buuton.Left := -1000;
-         Delete_Button.Left := -1000;
-    end;   }
+
 
     end;
 
@@ -509,9 +505,17 @@ procedure TSchedule_Edit_form.FormCreate(Sender: TObject);
 
 procedure TSchedule_Edit_form.Schedule_GridClick(Sender: TObject);
     var
-        psize_col, psize_row: integer;
+        psize_col, psize_row, Pcol, Prow: integer;
+        cur_rect: TRect;
     begin
-
+        Schedule_Grid.MouseToCell(M_X, M_Y, Pcol, Prow);
+        Cur_rect := Schedule_Grid.CellRect(Pcol, Prow);
+        //if Length(FGrid_Cells_Values[Prow][Pcol].FRecords)
+        //* FGrid_Cells_Values[PRow][PCol].max_text_height *
+        //    Selected_fields_count> Schedule_Grid.RowHeights[Prow] then
+        if PointInTriangle(point(cur_rect.Right, cur_rect.Bottom-15),
+        Point(cur_rect.Right, cur_rect.Bottom), Point(cur_rect.Right- 15, cur_rect.Bottom),
+        Point(M_X, M_Y)) then Schedule_GridDblClick(Sender);
     end;
 
 procedure TSchedule_Edit_form.Schedule_GridDblClick(Sender: TObject);
@@ -526,25 +530,11 @@ procedure TSchedule_Edit_form.Schedule_GridDblClick(Sender: TObject);
         Schedule_Grid.RowHeights[Size_row]:= (FGrid_Cells_Values[Size_row][Size_col].max_text_height) *
                 Selected_fields_count* Length(FGrid_Cells_Values[Size_row][Size_col].FRecords);
 
-        //ShowMessage(inttostr(Schedule_Grid.ColWidths[Size_col]));
-        //ShowMessage(IntToStr(FGrid_Cells_Values[Size_row][Size_col].max_text_width));
         if Schedule_Grid.ColWidths[Size_col] < FGrid_Cells_Values[Size_row][Size_col].max_text_width then
-        //ShowMessage('hi')
             Schedule_Grid.ColWidths[Size_col] := FGrid_Cells_Values[Size_row][Size_col].max_text_width
         else
             Schedule_Grid.ColWidths[Size_col] := FHorisontal_Fields[Size_col].max_text_width;
 
-        //if Schedule_Grid.RowHeights[size_row] > FGrid_Cells_Values[Size_row][psize_col].max_text_height *
-        //Length(Schedule_Table.FFields) then
-        //begin
-        //    Schedule_Grid.RowHeights[size_row] := 20 * Length(Schedule_Table.FFields);
-        //
-        //end
-        //else
-        //if length(FGrid_Cells_Values[size_col][size_row].FRecords) > 0 then
-        //    Schedule_Grid.RowHeights[size_row] :=
-        //        length(FGrid_Cells_Values[size_col][size_row].FRecords) *
-        //        20 * Length(Schedule_Table.FFields);
 
     end;
 
