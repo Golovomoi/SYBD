@@ -100,7 +100,7 @@ procedure TMySql.Reference_Table_Show(Sender: TObject);
 var
     Table_Discription: TReferenceForm;
 begin
-    Table_Discription := TReferenceForm.Create(My_Tables[(Sender as TMenuItem).Tag]);
+    Table_Discription := TReferenceForm.Create(My_Tables[(Sender as TMenuItem).Tag],[]);
     Table_Discription.Show_Table(My_Tables[(Sender as TMenuItem).Tag]);
 end;
 

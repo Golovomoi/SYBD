@@ -42,12 +42,15 @@ type
         FCreate_Filters_Button: TSpeedButton;
         FFilters_Scrol: TScrollBar;
         FFilters_List: array of TFilter;
-        constructor Create(Apanel: Tpanel; ATable: TTable_Info);
+        constructor Create(sender: Tobject;Apanel: Tpanel; ATable: TTable_Info; adef_filters: array of integer);
         procedure Create_Filter(Sender: TObject);
         procedure Delete_Filter(Sender: TObject);
         procedure Change_Filters_Scrol(Sender: TObject);
         procedure Start_Filters_scrol(Sender: TObject; var DragObject: TDragObject);
         function Get_Params(): string;
+        private
+            fdef_filters: array of integer;
+        public
     end;
 
 
@@ -56,8 +59,14 @@ implementation
 
 { TFilter_Shell }
 
-constructor TFilter_Shell.Create(Apanel: Tpanel; ATable: TTable_Info);
+constructor TFilter_Shell.Create(sender: Tobject; Apanel: Tpanel;
+		ATable: TTable_Info; adef_filters: array of integer);
+    var
+        i: integer;
 begin
+    SetLength(fdef_filters, Length(adef_filters));
+    for i:=0 to High(adef_filters) do
+    fdef_filters[i]:= adef_filters[i];
     FFilters_Panel := Apanel;
     FTable_Info := Atable;
     FCreate_Filters_Button := TSpeedButton.Create(Apanel);
@@ -88,6 +97,13 @@ begin
         OnChange := @Change_Filters_Scrol;
         Anchors := [];
     end;
+
+    for i:=0 to High(adef_filters) do
+    begin
+        Create_Filter(sender);
+        FFilters_List[i].FFilter_Edit.Caption:=inttostr(adef_filters[i]);
+        FFilters_List[i].FCombination_Select.Caption:='or';
+	end;
 
 end;
 
@@ -202,7 +218,7 @@ begin
         Parent := FFilter_Panel;
         left := 10;
         top := 12;
-        Width := 175;
+        Width := 150;
         Height := 25;
         OnChange := @FSelect_Field_change;
         ReadOnly := True;
@@ -219,7 +235,7 @@ begin
         Parent := FFilter_Panel;
         left := FSelect_Field.left + Fselect_Field.Width + 10;
         top := 12;
-        Width := 175;
+        Width := 150;
         Height := 25;
         ReadOnly := True;
         if ATable.FFields[0].FField_Type = FTStr then
@@ -245,7 +261,7 @@ begin
         Parent := FFilter_Panel;
         left := FSelect_Condition.left + FSelect_Condition.Width + 10;
         Top := 12;
-        Width := FFilter_Panel.Width div 2;
+        Width := FFilter_Panel.Width div 3;
         Height := FFilter_Panel.Height - 10;
     end;
 

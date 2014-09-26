@@ -30,8 +30,9 @@ type
         procedure Edit_PanelClick(Sender: TObject);
         procedure Save_ButtonClick(Sender: TObject);
         constructor Create(Atable: TTable_Info; Aproc: TCom_Proc;
-            ACurrent_Record_ID: string);
+            ACurrent_Record_ID: string; def_filters: array of integer);
     private
+        fdef_filters: array of integer;
         FCurrent_Table: TTable_Info;
         FRefresh_Reference: TCom_Proc;
         FCurrent_Record_ID: string;
@@ -234,12 +235,16 @@ begin
 end;
 
 constructor TCardEditForm.Create(Atable: TTable_Info; Aproc: TCom_Proc;
-    ACurrent_Record_ID: string);
+		ACurrent_Record_ID: string; def_filters: array of integer);
+var
+    i:integer;
 begin
     FCurrent_Table := Atable;
     FRefresh_Reference := Aproc;
     FCurrent_Record_ID := ACurrent_Record_ID;
     inherited Create(nil);
+    for i:=0 to High(def_filters) do
+    fdef_filters[i] := def_filters[i];
 end;
 
 

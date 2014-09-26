@@ -63,10 +63,18 @@ begin
 end;
 
 procedure TConflictsTreeForm.TreeViewDblClick(Sender: TObject);
+var
+  a, b: integer;
+  Reference_form: TReferenceForm;
 begin
-        ShowMessage('asd');
+  if TreeView.Selected = nil then Exit;
+  with TPoint(TreeView.Selected.Data^) do begin
+    a := x;
+    b := y;
+  end;
+  Reference_form:= TReferenceForm.Create(Schedule_Table,[a,b]);
+  Reference_form.Show_Table(Schedule_Table);
 end;
-
 
 {$R *.lfm}
 

@@ -41,6 +41,8 @@ type
         procedure Button_ShowClick(Sender: TObject);
         procedure Schedule_GridMouseMove(Sender: TObject; Shift: TShiftState;
             X, Y: integer);
+		procedure Schedule_GridStartDrag(Sender: TObject;
+				var DragObject: TDragObject);
         procedure Show_schedule();
         procedure Make_Title_array(var AFields_Array: TTitle_Array;
             AField_Index: integer);
@@ -121,6 +123,12 @@ procedure TSchedule_Edit_form.Schedule_GridMouseMove(Sender: TObject;
         M_Y := y;
         Replace_buttons();
     end;
+
+procedure TSchedule_Edit_form.Schedule_GridStartDrag(Sender: TObject;
+		var DragObject: TDragObject);
+begin
+
+end;
 
 procedure TSchedule_Edit_form.Show_schedule;
     var
@@ -252,7 +260,7 @@ procedure TSchedule_Edit_form.create_card(Sender: TObject);
         Edit_card: TCardEditForm;
     begin
         Edit_card := TCardEditForm.Create(Schedule_Table, @Show_schedule,
-            IntToStr((Sender as TSpeedButton).Tag));
+            IntToStr((Sender as TSpeedButton).Tag),[]);
         Edit_card.Show;
     end;
 
@@ -496,7 +504,7 @@ procedure TSchedule_Edit_form.FormCreate(Sender: TObject);
         with Horisontal_fields do
             Caption := Items.ValueFromIndex[2];
 
-        schedule_filter := TFilter_Shell.Create(Filters_panel, Schedule_Table);
+        schedule_filter := TFilter_Shell.Create(sender, Filters_panel, Schedule_Table, []);
         Button_ShowClick(Sender);
         Create_Cell_add_Button();
         Create_Cell_Edit_Button();

@@ -34,9 +34,10 @@ type
         procedure Refresh_ButtonClick(Sender: TObject);
         procedure Show_Table(ATable: TTable_Info);
         procedure generate_query();
-        constructor Create(ATable: TTable_Info);
+        constructor Create(ATable: TTable_Info; Adef_filters: array of integer);
         procedure Refresh_Query();
     private
+        fdef_filters: array of integer;
         FTable: TTable_Info;
         My_Filters: array of TFilter;
         One_Filter: TFilter;
@@ -134,8 +135,14 @@ begin
         Reference_DB_Grid.Columns[0].Visible := True;
 end;
 
-constructor TReferenceForm.Create(Atable: TTable_Info);
+constructor TReferenceForm.Create(ATable: TTable_Info;
+		Adef_filters: array of integer);
+    var
+        i: integer;
 begin
+    SetLength(fdef_filters,Length(Adef_filters));
+    for i:=0 to High(Adef_filters) do
+    fdef_filters[i]:=Adef_filters[i];
     FCurrent_Table := ATable;
     inherited Create(nil);
 end;
@@ -149,7 +156,7 @@ end;
 
 procedure TReferenceForm.FormCreate(Sender: TObject);
 begin
-    Reference_Filters := TFilter_Shell.Create(Filters_Panel, FCurrent_Table);
+    Reference_Filters := TFilter_Shell.Create(sender,Filters_Panel, FCurrent_Table, fdef_filters);
 end;
 
 procedure TReferenceForm.Reference_DB_GridTitleClick(Column: TColumn);
@@ -186,7 +193,7 @@ procedure TReferenceForm.Add_ButtonClick(Sender: TObject);
 var
     Edit_Form: TCardEditForm;
 begin
-    Edit_Form := TCardEditForm.Create(FCurrent_Table, @Refresh_Query, '0');
+    Edit_Form := TCardEditForm.Create(FCurrent_Table, @Refresh_Query, '0',[]);
     Edit_Form.Show;
 
 end;
@@ -196,7 +203,7 @@ var
     Edit_Form: TCardEditForm;
 begin
     Edit_Form := TCardEditForm.Create(FCurrent_Table, @Refresh_Query,
-        Reference_SQL_Query.FieldByName('ID').Text);
+        Reference_SQL_Query.FieldByName('ID').Text,[]);
     Edit_Form.Show;
 
 end;
